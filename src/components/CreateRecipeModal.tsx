@@ -163,6 +163,141 @@ const CreateRecipeModal: React.FC<CreateRecipeModalProps> = ({
                 placeholder="E.g., vegetable soup"
               />
             </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Preparation Time (minutes)
+              </label>
+              <input
+                type="number"
+                name="preparationTime"
+                required
+                value={formData.preparationTime}
+                onChange={handleInputChange}
+                min="1"
+                className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+                placeholder="E.g., 45"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              name="description"
+              required
+              value={formData.description}
+              onChange={handleInputChange}
+              rows={3}
+              className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              placeholder="Describe your recipe in a few sentences..."
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Ingredients
+            </label>
+            <textarea
+              name="ingredients"
+              required
+              value={formData.ingredients}
+              onChange={handleInputChange}
+              rows={4}
+              className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              placeholder="Enter ingredients, one per line"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Instructions
+            </label>
+            <textarea
+              name="instructions"
+              required
+              value={formData.instructions}
+              onChange={handleInputChange}
+              rows={4}
+              className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              placeholder="Enter step-by-step instructions"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Difficulty
+              </label>
+              <select
+                name="difficulty"
+                value={formData.difficulty}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Meal Type
+              </label>
+              <select
+                name="mealType"
+                value={formData.mealType}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              >
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snack">Snack</option>
+                <option value="dessert">Dessert</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Cuisine
+              </label>
+              <select
+                name="cuisine"
+                value={formData.cuisine}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+              >
+                <option value="indian">Indian</option>
+                <option value="italian">Italian</option>
+                <option value="chinese">Chinese</option>
+                <option value="mexican">Mexican</option>
+                <option value="japanese">Japanese</option>
+                <option value="thai">Thai</option>
+                <option value="american">American</option>
+                <option value="anglo-indian">Anglo-Indian</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Recipe Image
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={uploading}
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition duration-200"
+            />
+            {uploading && (
+              <p className="text-sm text-indigo-500">Uploading image...</p>
+            )}
           </div>
 
           <div className="flex justify-end space-x-4">
