@@ -6,12 +6,12 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Mail, Lock } from 'lucide-react';
 import { LoginConstants } from '../../../constants/LoginConstant';
-import { useAuth } from '@/context/AuthContext';
+import { useAuthStore } from '@/store/AuthStore';
 import Cookies from 'js-cookie';
 
 const LoginPage = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login } = useAuthStore();
   const {
     register,
     handleSubmit,

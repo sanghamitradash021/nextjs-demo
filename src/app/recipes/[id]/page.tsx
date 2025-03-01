@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
-import { useAuth } from '../../../context/AuthContext';
+// import { useAuth } from '../../../context/AuthContext';
 import { RecipeDetailConstants } from '../../../constants/RecipedetailsConstant';
 import { ThemeProvider, useTheme } from '@/context/ThemeContext';
+import { useAuthStore } from '@/store/AuthStore';
 
 interface Recipe {
   id: number;
@@ -45,7 +46,7 @@ const RecipeDetail: React.FC = () => {
     );
   }
   // const { id } = useParams(); // Using Next.js useRouter hook
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);

@@ -38,8 +38,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { AuthProvider } from '@/context/AuthContext';
+// import { AuthProvider } from '@/context/AuthContext';
 import Navbar from '../components/Navbar';
+// import { useAuthStore } from '@/store/AuthStore';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -57,10 +58,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} transition-colors duration-300`}>
         <ThemeProvider>
-          <AuthProvider>
-            <Navbar />
-            {children}
-          </AuthProvider>
+          <Navbar />
+          {children}
         </ThemeProvider>
       </body>
     </html>

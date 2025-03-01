@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import recipeRepository from "../../../../lib/repository/recipeRepository";
-// import { v2 as cloudinary } from "cloudinary";
+import recipeRepository from "@/lib/repository/recipeRepository";
+import { v2 as cloudinary } from "cloudinary";
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 /**
  * Handles recipe creation.
@@ -22,27 +22,46 @@ export async function POST(req: NextRequest) {
             const arrayBuffer = await imageFile.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
 
-            // const uploadResult = await new Promise((resolve, reject) => {
-            //     cloudinary.uploader.upload_stream(
-            //         { folder: "recipes" },
-            //         (error, result) => (error ? reject(error) : resolve(result))
-            //     ).end(buffer);
-            // });
-
-            // imageUrl = (uploadResult as any).secure_url;
+            imageUrl = await new Promise<string>((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    { folder: "recipes" },
+                    (error, result) => {
+                        if (error) {
+                            reject(new Error(`Cloudinary upload failed: ${error.message}`));
+                        } else {
+                            resolve(result?.secure_url || "");
+                        }
+                    }
+                );
+                uploadStream.end(buffer);
+            });
         }
 
-        // Extract recipe data
+        // Extract and validate recipe data
+        const title = formData.get("title") as string;
+        const user_id = Number(formData.get("user_id"));
+        const description = formData.get("description") as string;
+        const ingredients = formData.get("ingredients") ? JSON.parse(formData.get("ingredients") as string) : [];
+        const instructions = formData.get("instructions") as string;
+        const preparationTime = Number(formData.get("preparationTime"));
+        const difficulty = formData.get("difficulty") as string;
+        const cuisine = formData.get("cuisine") as string;
+        const mealType = formData.get("mealType") as string;
+
+        if (!title || !user_id || !description || !ingredients.length || !instructions || !preparationTime || !difficulty || !cuisine || !mealType) {
+            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
+        }
+
         const recipeData = {
-            title: formData.get("title") as string,
-            user_id: Number(formData.get("user_id")),
-            description: formData.get("description") as string,
-            ingredients: JSON.parse(formData.get("ingredients") as string),
-            instructions: formData.get("instructions") as string,
-            preparationTime: formData.get("preparationTime") as string,
-            difficulty: formData.get("difficulty") as string,
-            cuisine: formData.get("cuisine") as string,
-            mealType: formData.get("mealType") as string,
+            title,
+            user_id,
+            description,
+            ingredients,
+            instructions,
+            preparationTime,
+            difficulty,
+            cuisine,
+            mealType,
             image: imageUrl,
         };
 
@@ -52,8 +71,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Failed to create recipe" }, { status: 500 });
         }
 
-        return NextResponse.json({ message: "Recipe created successfully", recipeId }, { status: 201 });
+        return NextResponse.json({ message: "Recipe created successfully", recipeId, imageUrl }, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ message: "Error creating recipe", error }, { status: 500 });
+        return NextResponse.json({ message: "Error creating recipe", error: (error as Error).message }, { status: 500 });
     }
 }

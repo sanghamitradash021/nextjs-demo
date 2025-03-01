@@ -57,7 +57,7 @@ const EditRecipeModal: React.FC<EditRecipeModalProps> = ({
     try {
       const token = Cookies.get('auth_token');
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${recipe.recipe_id}`,
+        `/api/recipes/${recipe.recipe_id}`,
         formData,
         {
           headers: {

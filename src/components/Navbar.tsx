@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import CreateRecipeModal from './CreateRecipeModal';
 import { NavbarConstants } from '../constants/NavbarConstant';
-import { useAuth } from '../context/AuthContext';
+// import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useAuthStore } from '../store/AuthStore';
 
 /**
  * Interface representing a single search result in the navbar.
@@ -24,7 +25,7 @@ interface SearchResult {
  */
 const Navbar: React.FC = () => {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthStore();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [, setLoading] = useState(false);
@@ -274,3 +275,6 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+function useAuth(): { user: any; logout: any } {
+  throw new Error('Function not implemented.');
+}
