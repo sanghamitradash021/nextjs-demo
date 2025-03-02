@@ -1,7 +1,7 @@
 // src/constants/MyRecipesConstant.ts
 
 export const MyRecipesConstants = {
-    apiUrl: '/api/recipes',
+    apiUrl: 'http://localhost:3000/api/recipes',
     errorFetchingRecipes: 'Error fetching recipes.',
     noRecipesFound: 'No recipes found.',
     userNotAuthenticated: 'User is not authenticated.',
