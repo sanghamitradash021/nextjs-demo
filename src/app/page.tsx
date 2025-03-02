@@ -689,7 +689,7 @@ const Home: React.FC = () => {
   return (
     <ThemeProvider>
       <div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16 mt-10"
         style={{
           background: theme === 'light' ? '#fff' : '#333',
           color: theme === 'light' ? '#000' : '#fff',

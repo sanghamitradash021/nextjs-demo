@@ -125,7 +125,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav
+      <div
         className={`bg-white/80 shadow-lg w-full fixed top-0 left-0 z-10 backdrop-blur-sm`}
         style={{
           background: theme === 'light' ? '#fff' : '#333',
@@ -263,7 +263,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         </div>
-      </nav>
+      </div>
 
       <CreateRecipeModal
         isOpen={showCreateModal}
