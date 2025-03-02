@@ -75,7 +75,7 @@ const RecipeDetail: React.FC = () => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `${RecipeDetailConstants.commentApiUrl}/comments/${id}`
+          `${RecipeDetailConstants.commentApiUrl}comments/${id}`
         );
         setComments(response.data);
       } catch (error) {
