@@ -1,7 +1,7 @@
 
 
 
-import sequelize from "@/db/models";
+import sequelize from "../../db/models";
 import { QueryTypes } from "sequelize";
 import bcrypt from "bcrypt";
 import User from "../../db/models/user";

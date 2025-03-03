@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import userRepository from "../../../../lib/repository/userRepository"; // Adjust the path based on your structure
+import user from "../../../../db/models/user"
 
 export async function POST(req: NextRequest) {
+    // await user.sync({ force: true })
     try {
         const body = await req.json();
         const { email, password } = body;

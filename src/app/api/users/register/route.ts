@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import userRepository from "../../../../lib/repository/userRepository";
+// import user from "../../../../db/models/user";
 
 /**
  * Registers a new user.
@@ -8,6 +9,7 @@ import userRepository from "../../../../lib/repository/userRepository";
  * @returns {Promise<NextResponse>} - A promise indicating the completion of the operation.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
+    // await user.sync({ force: true })
     try {
         const body = await req.json(); // Extract request body
         const { email } = body;
