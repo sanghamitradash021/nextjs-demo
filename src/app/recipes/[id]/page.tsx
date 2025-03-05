@@ -443,3 +443,91 @@ const RecipeDetail: React.FC = () => {
 };
 
 export default RecipeDetail;
+
+// import { cookies } from 'next/headers';
+// import axios from 'axios';
+// import RecipeDetailClient from '../../../components/RecipeDetailClient';
+// import { RecipeDetailConstants } from '../../../constants/RecipedetailsConstant';
+
+// interface Recipe {
+//   id: number;
+//   title: string;
+//   description: string;
+//   image: string;
+//   ingredients: string[] | string;
+//   instructions: string;
+//   preparationTime: number;
+//   difficulty: string;
+//   cuisine: string;
+//   mealType: string;
+//   rating: number;
+//   user_id: number;
+// }
+
+// interface Comment {
+//   id: number;
+//   content: string;
+//   username: string;
+//   createdAt: string;
+// }
+
+// export default async function RecipeDetailPage({
+//   params,
+// }: {
+//   params: { id?: string };
+// }) {
+//   if (!params?.id) {
+//     return <p className="text-center text-red-500">Invalid Recipe ID</p>;
+//   }
+
+//   const recipeId = params.id;
+//   let recipe: Recipe | null = null;
+//   let comments: Comment[] = [];
+//   let averageRating: number | null = null;
+
+//   try {
+//     // Ensure absolute API URLs to prevent "Invalid URL" errors
+//     const apiBaseUrl =
+//       process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+//     console.log(`Fetching data for recipe ID: ${recipeId}`); // Debugging log
+
+//     // Fetch all data in parallel
+//     const [recipeResponse, commentsResponse, ratingResponse] =
+//       await Promise.all([
+//         axios.get(`${apiBaseUrl}/api/recipes/${recipeId}`).catch((err) => {
+//           console.error('Recipe not found:', err.response?.status);
+//           return null;
+//         }),
+//         axios.get(`${apiBaseUrl}/api/comments/${recipeId}`).catch(() => null),
+//         axios
+//           .get(`${apiBaseUrl}/api/ratings/rate/${recipeId}`)
+//           .catch(() => null),
+//       ]);
+
+//     // Handle possible API failures
+//     if (!recipeResponse || recipeResponse.status !== 200) {
+//       console.warn(`Recipe with ID ${recipeId} not found.`);
+//       return <p className="text-center text-red-500">Recipe not found.</p>;
+//     }
+
+//     recipe = recipeResponse.data;
+//     comments = commentsResponse?.data || [];
+//     averageRating = ratingResponse?.data?.averageRating
+//       ? parseFloat(ratingResponse.data.averageRating)
+//       : null;
+//   } catch (error) {
+//     console.error('Error fetching recipe details:', error);
+//     return (
+//       <p className="text-center text-red-500">Failed to load recipe details.</p>
+//     );
+//   }
+
+//   return (
+//     <RecipeDetailClient
+//       initialRecipe={recipe}
+//       initialComments={comments}
+//       initialAverageRating={averageRating}
+//     />
+//   );
+// }

@@ -44,6 +44,11 @@ User.init(
             type: DataTypes.ENUM("user", "admin"),
             defaultValue: "user",
         },
+        // googleId: {
+        //     type: DataTypes.STRING,
+        //     allowNull: true,
+        //     unique: true
+        //   }
 
     },
     {
@@ -51,5 +56,8 @@ User.init(
         tableName: "Users",
         timestamps: true,
     }
+
+
+
 )
 export default User

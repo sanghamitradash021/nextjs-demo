@@ -1,24 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import EditRecipeModal from '../../../components/EditRecipeModal';
+import EditRecipeModal from '../components/EditRecipeModal';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider, useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 import {
   API_URL,
   PLACEHOLDER_IMAGE,
   TOAST_SUCCESS_MESSAGE,
   TOAST_ERROR_MESSAGE,
   DELETE_CONFIRMATION_MESSAGE,
-  ERROR_FETCHING_RECIPE,
   ERROR_DELETING_RECIPE,
-  ERROR_NO_RECIPE_ID,
-  ERROR_RECIPE_NOT_FOUND,
-  LOADING_MESSAGE,
-} from '../../../constants/SinglepageConstant';
+} from '../constants/SinglepageConstant';
 
 interface Recipe {
   recipe_id: number;
@@ -35,44 +31,27 @@ interface Recipe {
   updatedAt: string;
 }
 
-const SingleRecipe = () => {
-  const params = useParams();
-  const recipeId = params?.id;
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [loading, setLoading] = useState(true);
+interface SingleRecipeClientProps {
+  initialRecipe: Recipe | null;
+  initialError: string | null;
+}
+
+const SingleRecipeClient: React.FC<SingleRecipeClientProps> = ({
+  initialRecipe,
+  initialError,
+}) => {
+  const [recipe, setRecipe] = useState<Recipe | null>(initialRecipe);
+  const [error, setError] = useState<string | null>(initialError);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { theme } = useTheme();
-
-  useEffect(() => {
-    if (!recipeId) {
-      setError(ERROR_NO_RECIPE_ID);
-      setLoading(false);
-      return;
-    }
-
-    const fetchRecipe = async () => {
-      try {
-        const response = await axios.get(`${API_URL}${recipeId}`);
-        setRecipe(response.data);
-      } catch (error) {
-        console.error('Error fetching recipe:', error);
-        setError(ERROR_FETCHING_RECIPE);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipe();
-  }, [recipeId]);
 
   const handleDelete = async () => {
     const confirmed = window.confirm(DELETE_CONFIRMATION_MESSAGE);
     if (confirmed) {
       try {
         const token = sessionStorage.getItem('token');
-        await axios.delete(`${API_URL}${recipeId}`, {
+        await axios.delete(`${API_URL}${recipe?.recipe_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Recipe deleted successfully!');
@@ -85,8 +64,13 @@ const SingleRecipe = () => {
   };
 
   const refreshRecipe = async () => {
+    if (!recipe?.recipe_id) return;
+
     try {
-      const response = await axios.get(`${API_URL}${recipeId}`);
+      const token = sessionStorage.getItem('token');
+      const response = await axios.get(`${API_URL}${recipe.recipe_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setRecipe(response.data);
     } catch (error) {
       console.error('Error fetching updated recipe:', error);
@@ -94,12 +78,11 @@ const SingleRecipe = () => {
     }
   };
 
-  if (loading) return <p>{LOADING_MESSAGE}</p>;
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!recipe) return <p>{ERROR_RECIPE_NOT_FOUND}</p>;
+  if (!recipe) return <p>No recipe found</p>;
 
   return (
-    <ThemeProvider>
+    <>
       <div
         className={`min-h-screen bg-gradient-to-b ${
           theme === 'light' ? 'from-gray-50 to-white' : 'from-gray-800 to-black'
@@ -211,9 +194,9 @@ const SingleRecipe = () => {
             recipe={{
               ...recipe,
               ingredients: Array.isArray(recipe.ingredients)
-                ? recipe.ingredients.join(', ') // Ensure ingredients is always a string
+                ? recipe.ingredients.join(', ')
                 : recipe.ingredients,
-              preparationTime: recipe.preparationTime.toString(), // Convert to string if necessary
+              preparationTime: recipe.preparationTime.toString(),
             }}
             onClose={() => {
               setShowEditModal(false);
@@ -228,91 +211,8 @@ const SingleRecipe = () => {
 
         <ToastContainer />
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 
-export default SingleRecipe;
-
-// 'use server';
-
-// import { cookies } from 'next/headers';
-// import { redirect } from 'next/navigation';
-// import { ThemeProvider } from '@/context/ThemeContext';
-// import { fetchRecipeById } from '../../../services/RecipeDetails'; // You'll need to create this service method
-// import SingleRecipeClient from './SingleRecipeClient';
-// import {
-//   ERROR_NO_RECIPE_ID,
-//   ERROR_RECIPE_NOT_FOUND,
-// } from '../../../constants/SinglepageConstant';
-
-// interface Recipe {
-//   recipe_id: number;
-//   title: string;
-//   description: string;
-//   ingredients: string[] | string;
-//   instructions: string;
-//   preparationTime: number;
-//   difficulty: string;
-//   image: string;
-//   cuisine: string;
-//   mealType: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// async function getServerSideRecipe(recipeId: string) {
-//   try {
-//     // Check authentication
-//     const token = cookies().get('auth_token')?.value;
-//     if (!token) {
-//       redirect('/login');
-//     }
-
-//     // Validate recipe ID
-//     if (!recipeId) {
-//       return {
-//         error: ERROR_NO_RECIPE_ID,
-//         recipe: null
-//       };
-//     }
-
-//     // Fetch recipe
-//     const recipe = await fetchRecipeById(recipeId, token);
-
-//     if (!recipe) {
-//       return {
-//         error: ERROR_RECIPE_NOT_FOUND,
-//         recipe: null
-//       };
-//     }
-
-//     return {
-//       recipe,
-//       error: null
-//     };
-//   } catch (error) {
-//     console.error('Server-side recipe fetch error:', error);
-//     return {
-//       error: 'Error fetching recipe. Please try again.',
-//       recipe: null
-//     };
-//   }
-// }
-
-// export default async function SingleRecipePage({
-//   params
-// }: {
-//   params: { id: string }
-// }) {
-//   const { recipe, error } = await getServerSideRecipe(params.id);
-
-//   return (
-//     <ThemeProvider>
-//       <SingleRecipeClient
-//         initialRecipe={recipe}
-//         initialError={error}
-//       />
-//     </ThemeProvider>
-//   );
-// }
+export default SingleRecipeClient;
