@@ -442,7 +442,17 @@ import { MyRecipesConstants } from '../../constants/MyrecipesConstant';
 import { fetchUserRecipes } from '@/services/Myrecipes';
 import RecipeList from '../../components/Myrecipes'; // We'll create a separate client component
 
-// Server-side function to fetch recipes
+export const metadata = {
+  title: 'My Recipes',
+  description: 'View and manage your saved recipes.',
+};
+
+/**
+ * Fetches user-specific recipes on the server side.
+ *
+ * @returns {Promise<{ recipes: any[], error: string | null }>} An object containing the fetched recipes and an optional error message.
+ */
+
 async function getServerSideRecipes() {
   try {
     const cookieStore = cookies();
@@ -469,6 +479,12 @@ async function getServerSideRecipes() {
     };
   }
 }
+
+/**
+ * My Recipes Page - Displays the user's saved recipes.
+ *
+ * @returns {Promise<JSX.Element>} The page component rendering the recipes list.
+ */
 
 export default async function MyRecipesPage() {
   // Fetch recipes server-side

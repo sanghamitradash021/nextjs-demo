@@ -5,6 +5,19 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { CONSTANTS } from '../constants/RecipelistConstant';
 
+/**
+ * Interface representing a Recipe object.
+ * @interface Recipe
+ * @property {number} recipe_id - The unique identifier for the recipe.
+ * @property {string} title - The title of the recipe.
+ * @property {string} description - A short description of the recipe.
+ * @property {string} image - The URL of the recipe's image.
+ * @property {number} preparationTime - The preparation time for the recipe in minutes.
+ * @property {string} difficulty - The difficulty level of the recipe.
+ * @property {string} cuisine - The cuisine type of the recipe.
+ * @property {string} mealType - The type of meal (e.g., breakfast, lunch).
+ */
+
 interface Recipe {
   recipe_id: number;
   title: string;
@@ -16,15 +29,34 @@ interface Recipe {
   mealType: string;
 }
 
+/**
+ * Props for the RecipeListContent component.
+ * @interface RecipeListContentProps
+ * @property {Recipe[]} initialRecipes - The list of initial recipes to display.
+ */
+
 interface RecipeListContentProps {
   initialRecipes: Recipe[];
 }
+
+/**
+ * RecipeListContent component that displays a list of recipes and handles navigation to recipe details.
+ *
+ * @component
+ * @param {RecipeListContentProps} props - The properties passed to the component.
+ * @returns {JSX.Element} - The JSX to render the component.
+ */
 
 const RecipeListContent: React.FC<RecipeListContentProps> = ({
   initialRecipes,
 }) => {
   const [recipes] = useState<Recipe[]>(initialRecipes);
   const router = useRouter();
+
+  /**
+   * Handles the click on a recipe card to navigate to the detailed recipe page.
+   * @param {number} id - The unique identifier of the recipe clicked.
+   */
 
   const handleRecipeClick = (id: number) => {
     router.push(`/recipes/${id}`);
@@ -81,6 +113,7 @@ const RecipeListContent: React.FC<RecipeListContentProps> = ({
 };
 
 export default RecipeListContent;
+
 // import { GetServerSideProps } from 'next';
 // import { useRouter } from 'next/navigation';
 // import { CONSTANTS } from '../constants/RecipelistConstant';

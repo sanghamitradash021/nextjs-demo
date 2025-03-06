@@ -8,6 +8,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { SIGNUP_MESSAGES, FORM_PLACEHOLDERS } from '@/constants/SignupConstant';
 
+/**
+ * SignUp Component - Handles user registration.
+ * @component
+ * @returns {JSX.Element} Sign-up form component.
+ */
+
 const SignUp: React.FC = () => {
   const router = useRouter();
   const {
@@ -18,6 +24,12 @@ const SignUp: React.FC = () => {
 
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  /**
+   * Handles form submission for user registration.
+   * @param {Object} data - The form data.
+   * @returns {Promise<void>}
+   */
 
   const onSubmit = async (data: any) => {
     setError('');

@@ -2,7 +2,11 @@
 
 import { CONSTANTS } from "../constants/RecipelistConstant";
 
-// Fetch all recipes
+/**
+ * Fetches all recipes from the API.
+ * @returns {Promise<any[]>} A promise that resolves with an array of recipes, or throws an error if the fetch fails.
+ */
+
 export const fetchRecipes = async () => {
     try {
         const response = await fetch(CONSTANTS.API_URL, {
@@ -21,7 +25,12 @@ export const fetchRecipes = async () => {
     }
 };
 
-// Fetch a single recipe by ID
+/**
+ * Fetches a single recipe by its ID from the API.
+ * @param {number} id - The ID of the recipe to fetch.
+ * @returns {Promise<any>} A promise that resolves with the recipe data, or throws an error if the fetch fails.
+ */
+
 export const fetchRecipeById = async (id: number) => {
     try {
         const response = await fetch(`${CONSTANTS.API_URL}/${id}`, {

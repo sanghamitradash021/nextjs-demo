@@ -6,6 +6,10 @@ import { useTheme } from '@/context/ThemeContext';
 import { RecipeDetailConstants } from '../constants/RecipedetailsConstant';
 import { useAuthStore } from '@/store/AuthStore';
 
+/**
+ * Interface representing a recipe.
+ */
+
 interface Recipe {
   id: number;
   title: string;
@@ -21,6 +25,10 @@ interface Recipe {
   user_id: number;
 }
 
+/**
+ * Interface representing a comment on a recipe.
+ */
+
 interface Comment {
   id: number;
   content: string;
@@ -28,11 +36,24 @@ interface Comment {
   createdAt: string;
 }
 
+/**
+ * Props for the RecipeDetailContent component.
+ * @property {Recipe | null} initialRecipe - The initial recipe data.
+ * @property {Comment[]} initialComments - The initial comments for the recipe.
+ * @property {number | null} initialAverageRating - The initial average rating of the recipe.
+ */
+
 interface RecipeDetailContentProps {
   initialRecipe: Recipe | null;
   initialComments: Comment[];
   initialAverageRating: number | null;
 }
+
+/**
+ * RecipeDetailContent component for displaying recipe details, rating, and comments.
+ * @param {RecipeDetailContentProps} props - The properties passed to the component.
+ * @returns {JSX.Element} The rendered component.
+ */
 
 const RecipeDetailContent: React.FC<RecipeDetailContentProps> = ({
   initialRecipe,
@@ -61,6 +82,12 @@ const RecipeDetailContent: React.FC<RecipeDetailContentProps> = ({
     : typeof recipe.ingredients === 'string'
     ? recipe.ingredients.split(',').map((item) => item.trim())
     : [];
+
+  /**
+   * Handles comment submission by sending the comment to the API and updating the state.
+   * @async
+   * @function handleCommentSubmit
+   */
 
   const handleCommentSubmit = async () => {
     if (!user) {
@@ -94,6 +121,13 @@ const RecipeDetailContent: React.FC<RecipeDetailContentProps> = ({
       console.error('Error posting comment:', error);
     }
   };
+
+  /**
+   * Handles rating submission by sending the rating to the API and updating the state.
+   * @async
+   * @function handleRateSubmit
+   * @param {number} ratingValue - The rating value to submit (1-5).
+   */
 
   const handleRateSubmit = async (ratingValue: number) => {
     if (!user) {

@@ -12,9 +12,27 @@ interface Recipe {
     difficulty?: string;
 }
 
+/**
+ * Recipe interface defines the structure for a recipe object.
+ * @interface Recipe
+ * @property {number} recipe_id - The unique ID of the recipe.
+ * @property {string} title - The title of the recipe.
+ * @property {string} description - A description of the recipe.
+ * @property {string} image - The image URL of the recipe.
+ * @property {number} [rating] - The rating of the recipe (optional).
+ * @property {string} [cuisine] - The cuisine type of the recipe (optional).
+ * @property {string} [mealType] - The meal type (e.g., breakfast, dinner) of the recipe (optional).
+ * @property {string} [preparationTime] - The preparation time for the recipe (optional).
+ * @property {string} [difficulty] - The difficulty level of the recipe (optional).
+ */
+
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3000";
 
-// Fetch all recipes
+/**
+ * Fetches all recipes from the API.
+ * @returns {Promise<Recipe[]>} A promise that resolves to an array of Recipe objects.
+ */
+
 export const fetchAllRecipes = async (): Promise<Recipe[]> => {
     try {
         const response = await fetch(`${API_BASE_URL}/api/recipes/getall`);

@@ -3,6 +3,30 @@ import axios from 'axios';
 import { FORM_LABELS } from '../constants/formlabels';
 import Cookies from 'js-cookie';
 
+/**
+ * Props for the EditRecipeModal component.
+ * @typedef {Object} EditRecipeModalProps
+ * @property {Object} recipe - The recipe details to be edited.
+ * @property {number} recipe.recipe_id - The unique ID of the recipe.
+ * @property {string} recipe.title - The title of the recipe.
+ * @property {string} recipe.description - The description of the recipe.
+ * @property {string} recipe.ingredients - The ingredients list.
+ * @property {string} recipe.instructions - The preparation instructions.
+ * @property {string} recipe.preparationTime - The time required for preparation.
+ * @property {string} recipe.difficulty - The difficulty level (easy, medium, hard).
+ * @property {string} recipe.cuisine - The cuisine type.
+ * @property {string} recipe.mealType - The meal type (breakfast, lunch, dinner, etc.).
+ * @property {string} [recipe.image] - Optional image URL of the recipe.
+ * @property {Function} onClose - Function to close the modal.
+ * @property {Function} onUpdate - Function to handle recipe update.
+ */
+
+/**
+ * Modal component for editing a recipe.
+ * @param {EditRecipeModalProps} props - Component props.
+ * @returns {JSX.Element} The rendered modal component.
+ */
+
 interface EditRecipeModalProps {
   recipe: {
     recipe_id: number;
@@ -39,6 +63,11 @@ const EditRecipeModal: React.FC<EditRecipeModalProps> = ({
 
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Handles input field changes.
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} e - The change event.
+   */
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -49,6 +78,11 @@ const EditRecipeModal: React.FC<EditRecipeModalProps> = ({
       [e.target.name]: e.target.value,
     });
   };
+
+  /**
+   * Handles form submission to update the recipe.
+   * @param {React.FormEvent} e - The form submit event.
+   */
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();

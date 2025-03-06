@@ -28,6 +28,14 @@ import axios from "axios";
 
 import { MyRecipesConstants } from "../constants/MyrecipesConstant";
 
+/**
+ * Fetches the user's recipes from the server.
+ * @param {number} userId - The ID of the user whose recipes are to be fetched.
+ * @param {string} token - The authorization token (JWT) for the user.
+ * @returns {Promise<any>} A promise that resolves with the user's recipe data.
+ * @throws {Error} Throws an error if the fetch fails or the response status is not successful.
+ */
+
 export const fetchUserRecipes = async (userId: number, token: string) => {
     try {
         const url = `${MyRecipesConstants.apiUrl}/my-recipes/${userId}`;

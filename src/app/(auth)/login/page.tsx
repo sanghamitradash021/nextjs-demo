@@ -9,6 +9,13 @@ import { LoginConstants } from '../../../constants/LoginConstant';
 import { useAuthStore } from '@/store/AuthStore';
 import Cookies from 'js-cookie';
 
+/**
+ * LoginPage component handles user authentication.
+ * Allows users to log in by submitting credentials.
+ *
+ * @returns {JSX.Element} The rendered login page component.
+ */
+
 const LoginPage = () => {
   const router = useRouter();
   const { login } = useAuthStore();
@@ -18,6 +25,14 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
   const [error, setError] = useState('');
+
+  /**
+   * Handles form submission for user login.
+   *
+   * @param {Object} formData - The login form data.
+   * @param {string} formData.email - The user's email.
+   * @param {string} formData.password - The user's password.
+   */
 
   const onSubmit = async (formData: any) => {
     setError('');

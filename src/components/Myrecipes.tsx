@@ -1,9 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/context/ThemeContext';
 import { MyRecipesConstants } from '../constants/MyrecipesConstant';
+
+/**
+ * Interface defining the structure of a recipe.
+ * @interface Recipe
+ */
 
 interface Recipe {
   id: number;
@@ -16,6 +21,13 @@ interface Recipe {
   difficulty: string;
   createdAt: string;
 }
+
+/**
+ * Props interface for the RecipeList component.
+ * @interface RecipeListProps
+ * @property {Recipe[]} initialRecipes - The initial list of recipes to display.
+ * @property {string | null} initialError - The error message, if any, to display.
+ */
 
 interface RecipeListProps {
   initialRecipes: Recipe[];
@@ -32,15 +44,33 @@ const RecipeList: React.FC<RecipeListProps> = ({
   const router = useRouter();
   const { theme } = useTheme();
 
+  /**
+   * Handles the action when the "View More" button is clicked.
+   * @param {number} recipeId - The ID of the recipe to view.
+   */
+
   const handleViewMore = (recipeId: number) => {
     router.push(`/recipe/${recipeId}`);
   };
 
-  const sortedRecipes = [...recipes].sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-  });
+  /**
+   * Sorts the recipes based on the creation date.
+   * @returns {Recipe[]} Sorted recipes.
+   */
+
+  // const sortedRecipes = [...recipes].sort((a, b) => {
+  //   const dateA = new Date(a.createdAt).getTime();
+  //   const dateB = new Date(b.createdAt).getTime();
+  //   return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+  // });
+
+  const sortedRecipes = useMemo(() => {
+    return [...recipes].sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  }, [recipes, sortOrder]);
 
   return (
     <div
