@@ -789,6 +789,7 @@ const CreateRecipeModal: React.FC<CreateRecipeModalProps> = ({
             <button
               type="button"
               onClick={onClose}
+              aria-label="Close modal"
               className="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full border border-transparent shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200"
             >
               Cancel
@@ -796,6 +797,7 @@ const CreateRecipeModal: React.FC<CreateRecipeModalProps> = ({
             <button
               type="submit"
               disabled={loading}
+              aria-label="Create Recipe"
               className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border border-transparent shadow-sm hover:from-indigo-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200"
             >
               {loading ? 'Creating...' : 'Create Recipe'}

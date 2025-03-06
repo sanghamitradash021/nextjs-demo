@@ -251,6 +251,7 @@ const EditRecipeModal: React.FC<EditRecipeModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
+                aria-label="Close modal"
                 className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 Cancel
@@ -258,6 +259,7 @@ const EditRecipeModal: React.FC<EditRecipeModalProps> = ({
               <button
                 type="submit"
                 disabled={loading}
+                aria-label="Update Recipe"
                 className="inline-flex items-center rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 {loading ? 'Updating...' : 'Update Recipe'}

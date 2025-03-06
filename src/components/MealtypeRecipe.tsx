@@ -65,6 +65,7 @@ export default function MealTypeRecipes() {
       <div className="text-center mt-6">
         <button
           onClick={() => router.push(`/recipes/meal-type/${selectedMealType}`)}
+          aria-label="Choose MealType"
           className={`px-6 py-3 rounded-lg font-medium text-lg transition-all duration-300 ${
             theme === 'light'
               ? 'bg-gray-900 text-white hover:bg-gray-700'

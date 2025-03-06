@@ -164,6 +164,7 @@ const RecipeList: React.FC<RecipeListProps> = ({
               </p>
               <button
                 onClick={() => router.push('/create-recipe')}
+                aria-label="Create Recipe"
                 className={`${MyRecipesConstants.createRecipeButtonClasses} ${
                   theme === 'light'
                     ? 'bg-indigo-500 text-white hover:bg-indigo-600'

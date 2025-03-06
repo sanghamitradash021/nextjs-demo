@@ -173,12 +173,14 @@ const SingleRecipeClient: React.FC<SingleRecipeClientProps> = ({
                 <div className="flex flex-col space-y-3">
                   <button
                     onClick={() => setShowEditModal(true)}
+                    aria-label="Edit Recipe"
                     className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700"
                   >
                     Edit Recipe
                   </button>
                   <button
                     onClick={handleDelete}
+                    aria-label="Delete Recipe"
                     className="border border-red-200 text-red-600 px-6 py-3 rounded-lg hover:bg-red-50 ml-4"
                   >
                     Delete Recipe

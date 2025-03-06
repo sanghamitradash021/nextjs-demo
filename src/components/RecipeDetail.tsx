@@ -318,6 +318,7 @@ const RecipeDetailContent: React.FC<RecipeDetailContentProps> = ({
             {comments.length > 3 && (
               <button
                 onClick={() => setShowAllComments((prev) => !prev)}
+                aria-label="Show all comments"
                 className={`text-blue-500 hover:underline mt-2 ${
                   theme === 'light' ? 'text-blue-500' : 'text-blue-300'
                 }`}
@@ -359,6 +360,7 @@ const RecipeDetailContent: React.FC<RecipeDetailContentProps> = ({
           />
           <button
             onClick={handleCommentSubmit}
+            aria-label="Submit Comment"
             className={`${RecipeDetailConstants.submitButtonClass} ${
               theme === 'light'
                 ? 'bg-indigo-500 text-white'
