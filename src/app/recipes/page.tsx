@@ -289,17 +289,45 @@
 
 // export default RecipeList;
 
+// import React from 'react';
+// // import { ThemeProvider } from '@/context/ThemeContext';
+// import RecipeListContent from '../../components/RecipeLists';
+// import { fetchRecipes } from '@/services/RecipeList';
+
+// export default async function RecipeListPage() {
+//   const initialRecipes = await fetchRecipes();
+
+//   return <RecipeListContent initialRecipes={initialRecipes} />;
+// }
+
 import React from 'react';
-import { ThemeProvider } from '@/context/ThemeContext';
 import RecipeListContent from '../../components/RecipeLists';
 import { fetchRecipes } from '@/services/RecipeList';
 
-export default async function RecipeListPage() {
-  const initialRecipes = await fetchRecipes();
+// Add metadata for SEO
+export const metadata = {
+  title: 'Recipe List',
+  description: 'Browse our collection of delicious recipes',
+};
 
-  return (
-    <ThemeProvider>
-      <RecipeListContent initialRecipes={initialRecipes} />
-    </ThemeProvider>
-  );
+// Add dynamic options to control revalidation
+export const revalidate = 3600; // Revalidate content every hour
+
+export default async function RecipeListPage() {
+  try {
+    const initialRecipes = await fetchRecipes();
+
+    return <RecipeListContent initialRecipes={initialRecipes} />;
+  } catch (error) {
+    // Handle fetch errors gracefully
+    console.error('Error fetching recipes:', error);
+
+    // Return fallback UI
+    return (
+      <div>
+        <h1>Unable to load recipes</h1>
+        <p>Please try again later</p>
+      </div>
+    );
+  }
 }

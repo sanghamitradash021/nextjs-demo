@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ThemeProvider, useTheme } from '../context/ThemeContext';
-import RecipeDetailContent from '../components/RecipeDetail';
+import RecipeDetailContent from './RecipeDetail';
 
 interface Recipe {
   id: number;

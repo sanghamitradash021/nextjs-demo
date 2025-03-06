@@ -1,4 +1,4 @@
-import Home from '../app/page';
+import Home from './page';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
